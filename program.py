@@ -1,6 +1,7 @@
 import cv2
 import numpy as np
 from utils import detect
+from utils import face
 from utils import opens
 
 # qr코드 / 바코드 / 얼굴 인식이 가능한 프로그램.
@@ -31,6 +32,9 @@ if __name__ == "__main__":
 
         # QR 코드 및 바코드 찾기
         frame_with_detection, decoded_objects = detect.detect_qr_and_barcode(frame)
+        
+        # 얼굴 찾기
+        frame_with_faces, faces = face.detect_faces(frame.copy())
         
         # 결과 화면에 표시
         cv2.imshow("QR and Barcode Detection", frame_with_detection)

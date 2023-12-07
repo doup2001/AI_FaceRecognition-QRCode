@@ -1,5 +1,7 @@
 import cv2
+import numpy as np
 from utils import detect
+from utils import opens
 
 # qr코드 / 바코드 / 얼굴 인식이 가능한 프로그램.
 # 얼굴 인식 후
@@ -15,7 +17,7 @@ def mouse_callback(event, x, y, flags, param):
 
 if __name__ == "__main__":
     # 카메라 캡처 설정
-    cap = cv2.VideoCapture(1)
+    cap = cv2.VideoCapture(0)
 
     # 마우스 이벤트 콜백 함수 등록
     cv2.namedWindow("QR and Barcode Detection")
@@ -33,10 +35,16 @@ if __name__ == "__main__":
         # 결과 화면에 표시
         cv2.imshow("QR and Barcode Detection", frame_with_detection)
 
-        # 키 입력 대기
-        key = cv2.waitKey(1)
-        if key in (27, ord('q')):  # ESC 키 또는 'q' 키를 누르면 종료
+        # 클릭한 좌표를 확인하고 해당하는 QR 코드의 URL을 열기
+        if cv2.waitKey(1) & 0xFF == ord('q'):
             break
+        elif clicked_coordinates:
+            x, y = clicked_coordinates.pop(0)
+            for obj in decoded_objects:
+                points = obj.polygon
+                if len(points) == 4 and cv2.pointPolygonTest(np.array(points, dtype=np.int32), (x, y), False) == 1:
+                    url = obj.data.decode('utf-8')
+                    opens.open_browser(url)
 
     # 사용한 자원 해제
     cap.release()

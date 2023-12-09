@@ -31,17 +31,18 @@ if __name__ == "__main__":
         if not ret:
             break
 
-        # QR 코드 및 바코드 찾기
+ # QR 코드 및 바코드 찾기
         frame_with_detection, decoded_objects = detect.detect_qr_and_barcode(frame)
         
         # 얼굴 찾기
-        frame_with_faces, faces = face.detect_faces(frame.copy())
-	
-	# 얼굴에 모자이크 적용
-	frame_with_faces_mosaic = mosaic_faces(frame_with_faces, faces)
-        
+        frame_with_faces, faces = face.detect_faces(frame_with_detection)
+
+        # 얼굴에 모자이크 적용
+        frame_with_faces_mosaic = mosaic.mosaic_faces(frame_with_faces, faces)
+
         # 결과 화면에 표시
-        cv2.imshow("QR and Barcode Detection", frame_with_detection)
+        cv2.imshow("QR, Barcode, and Face Detection", frame_with_faces_mosaic)
+
 
         # 클릭한 좌표를 확인하고 해당하는 QR 코드의 URL을 열기
         if cv2.waitKey(1) & 0xFF == ord('q'):

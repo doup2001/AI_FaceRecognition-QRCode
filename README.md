@@ -8,7 +8,7 @@ Gachon University OpenSource Term Project
   모자이크로 얼굴을 가려줄 수 있도록 기능을 추가하였습니다. 
 
 데모나예시를보여주는이미지/영상
-- 유튜브 링크 참조 : 
+- 유튜브 링크 참조 : https://youtu.be/pOba47FD-IU
 
 사용한패키지와그version(install이필요할경우안내)
 - numpy==1.26.2

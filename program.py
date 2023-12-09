@@ -3,6 +3,7 @@ import numpy as np
 from utils import detect
 from utils import face
 from utils import opens
+from utils import mosaic
 
 # qr코드 / 바코드 / 얼굴 인식이 가능한 프로그램.
 # 얼굴 인식 후
@@ -35,6 +36,9 @@ if __name__ == "__main__":
         
         # 얼굴 찾기
         frame_with_faces, faces = face.detect_faces(frame.copy())
+	
+	# 얼굴에 모자이크 적용
+	frame_with_faces_mosaic = mosaic_faces(frame_with_faces, faces)
         
         # 결과 화면에 표시
         cv2.imshow("QR and Barcode Detection", frame_with_detection)
